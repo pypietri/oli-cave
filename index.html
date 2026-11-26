@@ -24,13 +24,14 @@
 <link rel="manifest" href="site.webmanifest">
 <link rel="preload" href="JustBreathe.woff" as="font" type="font/woff" crossorigin>
 <script type="application/ld+json">
-{"@context":"https://schema.org","@type":"Restaurant","name":"Olì","alternateName":"Olì Paris","description":"Restaurant à Paris 9e.","url":"https://oli-cave.fr/","image":"https://oli-cave.fr/og.jpg","logo":"https://oli-cave.fr/round.png","email":"contact@oli-cave.fr","servesCuisine":"Française","address":{"@type":"PostalAddress","streetAddress":"22 rue Moncey","postalCode":"75009","addressLocality":"Paris","addressCountry":"FR"},"sameAs":["https://www.instagram.com/olicaveamanger.paris/"]}
+{"@context":"https://schema.org","@type":"Restaurant","name":"Olì","alternateName":"Olì Paris","description":"Restaurant à Paris 9e.","url":"https://oli-cave.fr/","image":"https://oli-cave.fr/og.jpg","logo":"https://oli-cave.fr/round.png","email":"contact@oli-cave.fr","servesCuisine":"Française","address":{"@type":"PostalAddress","streetAddress":"22 rue Moncey","postalCode":"75009","addressLocality":"Paris","addressCountry":"FR"},"sameAs":["https://www.instagram.com/oli.caveamanger/"]}
 </script>
 <style>
 @font-face{font-family:OliHand;src:url(JustBreathe.woff) format("woff");font-weight:400;font-display:swap}
 :root{--paper:#f4efe5;--card:#fbf8f2;--ink:#570724;--soft:rgba(87,7,36,.6);--line:rgba(87,7,36,.28)}
 *{box-sizing:border-box;margin:0;padding:0}
-html{scroll-behavior:smooth}
+html{scroll-behavior:smooth;overflow-x:clip}
+.write{overflow-x:clip}
 body{background:var(--paper);color:var(--ink);font-family:OliHand,"Bradley Hand","Segoe Print",cursive;-webkit-font-smoothing:antialiased;overflow-x:clip;-webkit-tap-highlight-color:transparent}
 a{color:inherit}
 button{font:inherit;color:inherit;background:none;border:0;cursor:pointer}
@@ -75,9 +76,9 @@ header{width:100%;display:flex;justify-content:space-between;align-items:center;
 .write{padding:56px max(18px,env(safe-area-inset-left)) 40px;display:flex;flex-direction:column;align-items:center}
 .write h2{font-weight:400;font-size:clamp(30px,7vw,40px);line-height:1.1;text-align:center;transform:rotate(-2deg)}
 .write .sub{font-size:19px;color:var(--soft);text-align:center;margin-top:8px;max-width:30ch}
-.card{position:relative;width:100%;max-width:820px;margin-top:28px;background:var(--card);border-radius:6px;
+.card{position:relative;width:100%;max-width:620px;margin-top:28px;background:var(--card);border-radius:6px;
 box-shadow:0 1px 0 rgba(87,7,36,.08),0 18px 40px -24px rgba(87,7,36,.45),0 3px 10px -6px rgba(87,7,36,.25);
-display:grid;grid-template-columns:1fr;transform:rotate(-.6deg);transition:transform .6s cubic-bezier(.3,1.4,.5,1)}
+display:grid;grid-template-columns:minmax(0,1fr);transform:rotate(-.6deg);transition:transform .6s cubic-bezier(.3,1.4,.5,1)}
 .card::before{content:"";position:absolute;inset:8px;border:1px solid var(--line);border-radius:3px;pointer-events:none}
 .canvas-zone{position:relative;aspect-ratio:4/3;margin:16px 16px 0;border-bottom:1.5px dashed var(--line);touch-action:none;cursor:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='28' height='28'%3E%3Cpath d='M3 25l2-7L19 4l5 5-14 14z' fill='%23fbf8f2' stroke='%23570724' stroke-width='1.8' stroke-linejoin='round'/%3E%3Cpath d='M3 25l2-7 5 5z' fill='%23570724'/%3E%3C/svg%3E") 3 25,crosshair}
 .canvas-zone canvas{position:absolute;inset:0;width:100%;height:100%}
@@ -88,18 +89,13 @@ display:grid;grid-template-columns:1fr;transform:rotate(-.6deg);transition:trans
 .zone-tools button:hover:not(:disabled){color:var(--ink);background:rgba(87,7,36,.06)}
 .zone-tools button:disabled{opacity:0;pointer-events:none}
 
-.addr{position:relative;padding:18px 26px 22px;display:flex;flex-direction:column;gap:14px}
-.stamp{position:absolute;top:-6px;right:22px;width:74px;height:88px;padding:5px;transform:rotate(4deg);background:var(--card);border:2px dotted rgba(87,7,36,.35);box-shadow:0 2px 6px -2px rgba(87,7,36,.25)}
-.stamp div{width:100%;height:100%;border:1px solid var(--line);display:grid;place-items:center;background:var(--paper)}
-.stamp img{width:62%;height:auto;transform:rotate(-8deg)}
-.row{display:flex;align-items:baseline;gap:10px;border-bottom:1.5px solid var(--line);padding-bottom:4px;min-height:44px}
+.addr{position:relative;padding:10px 22px 18px}
+.row{display:flex;align-items:center;gap:10px;border-bottom:1.5px solid var(--line);padding-bottom:4px;min-height:44px}
 .row label,.row .k{flex:none;font-size:19px;color:var(--soft);width:30px}
-.row .v{font-size:21px}
-.row input{flex:1;min-width:0;border:0;outline:0;background:transparent;font:inherit;font-size:22px;color:var(--ink);padding:6px 0}
+.row input{flex:1;min-width:0;width:0;border:0;outline:0;background:transparent;font:inherit;font-size:22px;color:var(--ink);padding:6px 0}
 .row input::placeholder{color:var(--soft);opacity:.55}
-.to{padding-right:96px}
-.send{display:flex;align-items:center;justify-content:space-between;gap:12px;margin-top:4px;flex-wrap:wrap}
-.legal-note{font-size:14.5px;line-height:1.35;color:var(--soft);flex:1;min-width:180px}
+.row .btn{flex:none;padding:11px 22px;min-height:44px}
+.legal-note{font-size:14.5px;line-height:1.35;color:var(--soft);text-align:center;margin-top:14px;text-wrap:balance}
 .btn{font-size:19px;line-height:1;padding:13px 26px;min-height:48px;border-radius:999px;background:var(--ink);color:var(--card);transition:transform .2s,opacity .2s;white-space:nowrap}
 .btn:hover{transform:rotate(-2deg) scale(1.03)}
 .btn:disabled{opacity:.5;transform:none;cursor:default}
@@ -108,15 +104,15 @@ display:grid;grid-template-columns:1fr;transform:rotate(-.6deg);transition:trans
 .hp{position:absolute;left:-9999px;width:1px;height:1px;opacity:0}
 
 /* sent */
-.postmark{position:absolute;left:50%;top:44%;width:210px;height:210px;margin:-105px 0 0 -105px;pointer-events:none;opacity:0;transform:rotate(-14deg) scale(1.6);z-index:3}
+.postmark{position:absolute;left:50%;top:40%;width:min(290px,78%);aspect-ratio:300/180;translate:-50% -50%;pointer-events:none;opacity:0;transform:rotate(-9deg) scale(1.5);z-index:3;mix-blend-mode:multiply}
 .postmark svg{width:100%;height:100%;overflow:visible}
 .card.sent .postmark{animation:thump .45s cubic-bezier(.2,1.6,.4,1) forwards}
-.card.sent{transform:rotate(1.2deg)}
+.card.sent{transform:rotate(.4deg)}
 .card.sent .canvas-zone{pointer-events:none}
 .card.sent .row input{pointer-events:none}
 .card.sent .zone-tools{display:none}
 .card.sent .canvas-hint{opacity:0!important}
-@keyframes thump{to{opacity:.88;transform:rotate(-14deg) scale(1)}}
+@keyframes thump{to{opacity:.9;transform:rotate(-9deg) scale(1)}}
 
 footer{text-align:center;padding:8px 20px max(26px,env(safe-area-inset-bottom));font-size:15px;color:var(--soft)}
 footer button{font-size:15px;color:var(--soft);text-decoration:underline;text-underline-offset:3px;padding:6px}
@@ -135,12 +131,8 @@ dialog .close{position:absolute;top:12px;right:16px;font-size:26px;line-height:1
   .hero{padding:30px 48px 22px}
   header{font-size:23px}.brand{width:78px}
   .seal{width:180px}.tag{font-size:27px}.insta{font-size:23px}.address{font-size:22px}
-  .card{grid-template-columns:1.15fr 1fr}
-  .canvas-zone{margin:18px 0 18px 18px;border-bottom:0;border-right:1.5px dashed var(--line);aspect-ratio:auto;min-height:380px}
-  .addr{padding:30px 28px 24px;justify-content:flex-end}
-  .stamp{top:24px;right:26px}
-  .to{padding-right:0}
-  .addr .rows{margin-top:auto}
+  .canvas-zone{aspect-ratio:3/2;margin:18px 18px 0}
+  .write h2{font-size:44px}
 }
 @media (max-height:640px){.seal{width:100px}.center{padding:10px 0}.insta{margin-top:18px}}
 @media (prefers-reduced-motion:reduce){
@@ -161,7 +153,7 @@ dialog .close{position:absolute;top:12px;right:16px;font-size:26px;line-height:1
     <button class="seal" id="seal" type="button" aria-label="Rejouer l’animation"><img src="round.png" alt="" width="360" height="428"></button>
     <p class="tag">cave à manger</p>
     <p class="coming">bientôt à table.<svg viewBox="0 0 150 10" aria-hidden="true" preserveAspectRatio="none"><path d="M3 6 Q40 9 77 5 T147 4"/></svg></p>
-    <a class="insta" href="https://www.instagram.com/olicaveamanger.paris/" target="_blank" rel="noopener">
+    <a class="insta" href="https://www.instagram.com/oli.caveamanger/" target="_blank" rel="noopener">
       <svg viewBox="0 0 32 32" fill="none" stroke="currentColor" stroke-width="2.1" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M10 3.7 C5 3.3 3.5 5.6 3.8 11 L3.2 22 C3.1 27.2 5.6 28.5 10.8 28.2 L22.2 28.6 C27.2 28.8 29 26 28.6 21.2 L28.9 10 C29 5 26.7 3.5 21.6 3.8 Z"/><path d="M22.1 15.4 C22.8 23.3 11.3 24.5 10.1 17.1 C8.9 9.3 21.3 8.2 22.1 15.4 Z"/><path d="M23.5 8.1 L23.8 8.4" stroke-width="3.2"/></svg>
       <span>suivez l’ouverture sur Insta</span>
     </a>
@@ -174,7 +166,6 @@ dialog .close{position:absolute;top:12px;right:16px;font-size:26px;line-height:1
 
 <section class="write" id="ecrire">
   <h2>envoyez-nous une carte.</h2>
-  <p class="sub">un dessin, un mot, ou juste votre mail : on vous écrit pour l’ouverture.</p>
 
   <form class="card" id="card" novalidate>
     <div class="canvas-zone" id="zone">
@@ -186,27 +177,40 @@ dialog .close{position:absolute;top:12px;right:16px;font-size:26px;line-height:1
       </div>
     </div>
     <div class="addr">
-      <div class="stamp" aria-hidden="true"><div><img src="round.png" alt=""></div></div>
-      <div class="rows">
-        <div class="row to"><span class="k">à :</span><span class="v">Olì, 22 rue Moncey</span></div>
-        <div class="row" style="margin-top:14px"><label for="email">de :</label><input id="email" name="email" type="email" inputmode="email" autocomplete="email" placeholder="votre@mail.fr" required></div>
-      </div>
-      <div class="send">
-        <p class="legal-note">en postant, vous recevrez nos nouvelles (ouverture, soirées). désinscription en un clic.</p>
-        <button class="btn" id="sendBtn" type="submit">poster</button>
-      </div>
+      <div class="row"><label for="email">de :</label><input id="email" name="email" type="email" inputmode="email" autocomplete="email" placeholder="votre@mail.fr" required><button class="btn" id="sendBtn" type="submit">poster</button></div>
       <input class="hp" type="text" name="website" id="website" tabindex="-1" autocomplete="off" aria-hidden="true">
     </div>
     <div class="postmark" aria-hidden="true">
-      <svg viewBox="0 0 210 210" fill="none" stroke="#570724" stroke-width="2.4">
-        <circle cx="105" cy="105" r="84"/><circle cx="105" cy="105" r="68" stroke-width="1.4"/>
-        <path d="M14 92 C60 88 150 88 196 92 M14 118 C60 122 150 122 196 118" stroke-width="1.6"/>
-        <text x="105" y="111" text-anchor="middle" font-family="OliHand,cursive" font-size="25" fill="#570724" stroke="none">bien reçu</text>
-        <text x="105" y="66" text-anchor="middle" font-family="OliHand,cursive" font-size="15" fill="#570724" stroke="none">paris 9e</text>
-        <text x="105" y="153" text-anchor="middle" font-family="OliHand,cursive" font-size="15" fill="#570724" stroke="none">olì</text>
+      <svg viewBox="0 0 300 180">
+        <defs>
+          <filter id="ink" x="-10%" y="-10%" width="120%" height="120%">
+            <feTurbulence type="fractalNoise" baseFrequency=".85" numOctaves="2" seed="4" result="n"/>
+            <feColorMatrix in="n" type="matrix" values="0 0 0 0 0  0 0 0 0 0  0 0 0 0 0  0 0 0 -2.2 1.55" result="m"/>
+            <feComposite in="SourceGraphic" in2="m" operator="in" result="t"/>
+            <feTurbulence type="fractalNoise" baseFrequency=".035" numOctaves="2" seed="9" result="d"/>
+            <feDisplacementMap in="t" in2="d" scale="3"/>
+          </filter>
+          <path id="ring" d="M 90 90 m -63 0 a 63 63 0 1 1 126 0 a 63 63 0 1 1 -126 0"/>
+        </defs>
+        <g filter="url(#ink)" stroke="#570724" fill="none">
+          <circle cx="90" cy="90" r="80" stroke-width="3.2"/>
+          <circle cx="90" cy="90" r="46" stroke-width="1.6"/>
+          <text font-family="OliHand,cursive" font-size="17" letter-spacing="2.2" fill="#570724" stroke="none"><textPath href="#ring">olì ✶ paris 9e ✶ 22 rue moncey ✶ olì ✶</textPath></text>
+          <text x="90" y="89" text-anchor="middle" font-family="OliHand,cursive" font-size="21" fill="#570724" stroke="none">bien reçu</text>
+          <text x="90" y="110" text-anchor="middle" font-family="OliHand,cursive" font-size="14" letter-spacing="1" fill="#570724" stroke="none" id="pmDate"></text>
+          <g stroke-width="2.6" stroke-linecap="round">
+            <path d="M178 58 q 15 -9 30 0 t 30 0 t 30 0 t 26 0"/>
+            <path d="M178 76 q 15 -9 30 0 t 30 0 t 30 0 t 26 0"/>
+            <path d="M178 94 q 15 -9 30 0 t 30 0 t 30 0 t 26 0"/>
+            <path d="M178 112 q 15 -9 30 0 t 30 0 t 30 0 t 26 0"/>
+            <path d="M178 130 q 15 -9 30 0 t 30 0 t 30 0 t 26 0"/>
+          </g>
+        </g>
       </svg>
     </div>
   </form>
+  <p class="legal-note">en postant, vous recevrez nos nouvelles. désinscription en un clic.</p>
+
   <p class="status" id="status" role="status" aria-live="polite"></p>
 </section>
 
@@ -305,6 +309,8 @@ dialog .close{position:absolute;top:12px;right:16px;font-size:26px;line-height:1
     try {
       const drawing = strokes.length ? await exportDrawing() : '';
       await fetch(ENDPOINT, { method: 'POST', mode: 'no-cors', headers: { 'Content-Type': 'text/plain;charset=utf-8' }, body: JSON.stringify({ email: v, consent: true, website: document.getElementById('website').value, drawing }) });
+      const d = new Date(), p = n => String(n).padStart(2, '0');
+      document.getElementById('pmDate').textContent = p(d.getDate()) + ' · ' + p(d.getMonth() + 1) + ' · ' + String(d.getFullYear()).slice(2);
       card.classList.add('sent');
       sendBtn.textContent = 'postée';
       status.textContent = strokes.length ? 'merci pour le mot. on vous écrit pour l’ouverture.' : 'c’est noté. on vous écrit pour l’ouverture.';
