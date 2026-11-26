@@ -27,179 +27,189 @@
 {"@context":"https://schema.org","@type":"Restaurant","name":"Olì","alternateName":"Olì cave à manger","description":"Cave à manger à Paris 9e.","url":"https://oli-cave.fr/","image":"https://oli-cave.fr/og.jpg","logo":"https://oli-cave.fr/round.png","email":"contact@oli-cave.fr","servesCuisine":"Cave à manger","address":{"@type":"PostalAddress","streetAddress":"22 rue Moncey","postalCode":"75009","addressLocality":"Paris","addressCountry":"FR"},"sameAs":["https://www.instagram.com/olicaveamanger.paris/"]}
 </script>
 <style>
-@font-face{font-family:OliHand;src:url(JustBreathe.woff) format("woff"),url(https://static.wfonts.com/download/data/2017/10/16/just-breathe/JustBreathe.woff) format("woff");font-weight:400;font-display:swap}
-:root{--paper:#f4efe5;--ink:#570724;--ink-soft:rgba(87,7,36,.62);--vh:100svh}
+@font-face{font-family:OliHand;src:url(JustBreathe.woff) format("woff");font-weight:400;font-display:swap}
+:root{--paper:#f4efe5;--card:#fbf8f2;--ink:#570724;--soft:rgba(87,7,36,.6);--line:rgba(87,7,36,.28)}
 *{box-sizing:border-box;margin:0;padding:0}
-html,body{height:100%}
+html{scroll-behavior:smooth}
 body{background:var(--paper);color:var(--ink);font-family:OliHand,"Bradley Hand","Segoe Print",cursive;-webkit-font-smoothing:antialiased;overflow-x:clip;-webkit-tap-highlight-color:transparent}
 a{color:inherit}
 button{font:inherit;color:inherit;background:none;border:0;cursor:pointer}
 :focus-visible{outline:1.5px dashed currentColor;outline-offset:5px;border-radius:4px}
 .sr{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap}
 
-/* paper grain + vignette */
-.grain{position:fixed;inset:-50%;width:200%;height:200%;pointer-events:none;z-index:50;opacity:.13;mix-blend-mode:multiply;
+/* paper grain */
+.grain{position:fixed;inset:-50%;width:200%;height:200%;pointer-events:none;z-index:50;opacity:.12;mix-blend-mode:multiply;
 background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='220' height='220'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.85' numOctaves='3' stitchTiles='stitch'/%3E%3CfeColorMatrix values='0 0 0 0 .30 0 0 0 0 .22 0 0 0 0 .16 0 0 0 .5 0'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");animation:grain 1.2s steps(4) infinite}
-@keyframes grain{0%{transform:translate(0,0)}25%{transform:translate(-3%,2%)}50%{transform:translate(2%,-3%)}75%{transform:translate(-2%,-1%)}100%{transform:translate(0,0)}}
-.vignette{position:fixed;inset:0;pointer-events:none;z-index:49;background:radial-gradient(120% 90% at 50% 45%,transparent 55%,rgba(87,7,36,.06) 100%)}
+@keyframes grain{25%{transform:translate(-3%,2%)}50%{transform:translate(2%,-3%)}75%{transform:translate(-2%,-1%)}}
 
-.sheet{position:relative;min-height:var(--vh);display:flex;flex-direction:column;align-items:center;
-padding:max(18px,env(safe-area-inset-top)) max(22px,env(safe-area-inset-right)) max(14px,env(safe-area-inset-bottom)) max(22px,env(safe-area-inset-left))}
-
-header{width:100%;display:flex;justify-content:space-between;align-items:center;font-size:21px;line-height:1.3;position:relative;z-index:5}
+/* ---------- hero ---------- */
+.hero{position:relative;min-height:100svh;display:flex;flex-direction:column;align-items:center;
+padding:max(18px,env(safe-area-inset-top)) max(22px,env(safe-area-inset-right)) 18px max(22px,env(safe-area-inset-left))}
+header{width:100%;display:flex;justify-content:space-between;align-items:center;font-size:21px}
 .brand{width:62px;line-height:0;opacity:0;animation:up .8s .2s forwards}
 .brand img{width:100%;height:auto}
-.where{opacity:0;animation:up .8s .3s forwards}
-.where b{font-weight:400;display:inline-block;transform:rotate(3deg)}
-
-main{flex:1 0 auto;width:100%;display:flex;flex-direction:column;align-items:center;justify-content:center;padding:26px 0;position:relative;z-index:5;text-align:center}
-
-/* the seal draws itself */
-.seal{position:relative;width:148px;aspect-ratio:360/428;display:block;transform:rotate(-7deg);transition:transform .5s cubic-bezier(.3,1.6,.5,1)}
+.where{opacity:0;animation:up .8s .3s forwards;transform:rotate(3deg)}
+.center{flex:1;width:100%;display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;padding:24px 0}
+.seal{width:150px;aspect-ratio:360/428;display:block;transform:rotate(-7deg);transition:transform .5s cubic-bezier(.3,1.6,.5,1)}
 .seal:hover{transform:rotate(2deg) scale(1.04)}
-.seal:active{transform:rotate(-2deg) scale(.95)}
 .seal img{width:100%;height:auto;display:block;-webkit-mask:conic-gradient(from 200deg,#000 var(--a),transparent calc(var(--a) + .5deg));mask:conic-gradient(from 200deg,#000 var(--a),transparent calc(var(--a) + .5deg));animation:draw 1.5s .35s cubic-bezier(.55,.1,.3,1) forwards}
 @property --a{syntax:"<angle>";inherits:false;initial-value:0deg}
 @keyframes draw{to{--a:361deg}}
-.seal::after{content:"";position:absolute;inset:-14%;border-radius:50%;background:radial-gradient(circle,rgba(87,7,36,.08),transparent 65%);z-index:-1;animation:breathe 5s 2s ease-in-out infinite}
-@keyframes breathe{50%{transform:scale(1.12);opacity:.6}}
-
-.tag{font-size:24px;line-height:1.3;margin-top:22px;opacity:0;animation:up .8s 1.3s forwards;letter-spacing:.02em}
-.coming{position:relative;font-size:clamp(34px,9vw,52px);line-height:1.1;margin-top:18px;transform:rotate(-3deg);opacity:0;animation:up .9s 1.55s forwards}
+.tag{font-size:24px;margin-top:22px;opacity:0;animation:up .8s 1.3s forwards}
+.coming{position:relative;font-size:clamp(36px,9.5vw,54px);line-height:1.1;margin-top:16px;transform:rotate(-3deg);opacity:0;animation:up .9s 1.55s forwards}
 .coming svg{position:absolute;left:4%;bottom:-12px;width:92%;height:14px;overflow:visible}
 .coming path{stroke:currentColor;stroke-width:2;fill:none;stroke-linecap:round;stroke-dasharray:170;stroke-dashoffset:170;animation:stroke .7s 2.2s forwards}
-
-.tease{height:30px;margin-top:22px;font-size:21px;color:var(--ink-soft);position:relative;width:100%;opacity:0;animation:up .8s 2.4s forwards}
-.tease span{position:absolute;left:0;right:0;opacity:0;transform:translateY(8px) rotate(-1deg);transition:opacity .6s,transform .6s}
-.tease span.on{opacity:1;transform:none}
-
-.insta{display:inline-flex;align-items:center;gap:10px;margin-top:22px;padding:10px 6px;min-height:44px;text-decoration:none;font-size:21px;font-weight:700;-webkit-text-stroke:.35px currentColor;opacity:0;animation:up .8s 2.6s forwards}
+.insta{display:inline-flex;align-items:center;gap:10px;margin-top:34px;padding:10px 6px;min-height:44px;text-decoration:none;font-size:21px;font-weight:700;-webkit-text-stroke:.35px currentColor;opacity:0;animation:up .8s 2.4s forwards}
 .insta svg{width:27px;height:28px;flex-shrink:0;transform:rotate(-5deg);transition:transform .3s}
 .insta:hover svg{transform:rotate(8deg) scale(1.08)}
-.insta:hover span{text-decoration:underline;text-underline-offset:5px;text-decoration-thickness:1.5px}
-
-
-
-footer{width:100%;text-align:center;position:relative;z-index:8;margin-top:18px;opacity:0;animation:up .8s 3s forwards}
-.address{display:inline-block;text-decoration:none;font-size:20px;line-height:1.3;padding:6px 10px}
+.insta:hover span{text-decoration:underline;text-underline-offset:5px}
+.foot{width:100%;display:flex;flex-direction:column;align-items:center;gap:14px;opacity:0;animation:up .8s 2.6s forwards}
+.address{text-decoration:none;font-size:20px;line-height:1.3;text-align:center;padding:4px 10px}
 .address small{display:block;font-size:inherit}
 .address:hover{text-decoration:underline;text-underline-offset:5px}
-.actions{display:flex;justify-content:center;align-items:center;gap:8px;margin-top:10px;min-height:46px}
-.btn{font-size:18px;line-height:1.2;padding:11px 18px;min-height:46px;border-radius:999px;white-space:nowrap;transition:transform .2s,background .2s,color .2s,opacity .2s}
-.btn-main{background:var(--ink);color:var(--paper);border:1.5px solid var(--ink)}
-.btn-main:hover{transform:rotate(-2deg) scale(1.03)}
-.btn-main[aria-pressed=true]{background:transparent;color:var(--ink)}
-.btn-ghost{padding:11px 8px}
-.btn-ghost:hover{text-decoration:underline;text-underline-offset:5px}
-.btn:disabled{opacity:.28;cursor:default;text-decoration:none}
-.hint{font-size:15px;line-height:1.3;margin-top:6px;min-height:20px;color:var(--ink-soft)}
-.mail-link{display:block;margin:4px auto 0;font-size:17px;color:var(--ink);padding:8px 6px;min-height:40px;text-decoration:underline;text-underline-offset:5px;text-decoration-thickness:1px}
-.mail-link[aria-expanded=true]{display:none}
-.signup{max-width:400px;margin:8px auto 4px;text-align:left;animation:up .5s both}
-.signup-title{font-size:23px;text-align:center;margin-bottom:6px;transform:rotate(-1.5deg)}
-.signup-joined{font-size:16px;text-align:center;color:var(--ink-soft);margin-bottom:6px}
-.signup-joined button{text-decoration:underline;text-underline-offset:3px;font-size:16px;color:var(--ink-soft)}
-.field{display:flex;gap:8px;align-items:center;border-bottom:1.5px solid var(--ink);padding:2px 0 6px}
-.field input{flex:1;min-width:0;background:transparent;border:0;outline:0;font:inherit;font-size:21px;color:var(--ink);padding:8px 2px}
-.field input::placeholder{color:var(--ink-soft);opacity:.7}
-.field .btn{flex:none;padding:9px 18px;min-height:42px}
-.btn:disabled.btn-main{opacity:.5}
-.consent{display:flex;gap:9px;align-items:flex-start;margin-top:10px;font-size:15px;line-height:1.35;cursor:pointer;color:var(--ink-soft)}
-.consent input{appearance:none;flex:none;width:19px;height:19px;margin-top:1px;border:1.5px solid var(--ink);border-radius:5px;display:grid;place-items:center;cursor:pointer}
-.consent input:checked::after{content:"";width:9px;height:9px;border-radius:2px;background:var(--ink)}
-.hp{position:absolute;left:-9999px;width:1px;height:1px;opacity:0}
-.status{min-height:22px;margin-top:8px;font-size:17px;text-align:center}
+.down{display:inline-flex;flex-direction:column;align-items:center;gap:2px;text-decoration:none;font-size:19px;padding:6px 12px}
+.down svg{width:18px;height:22px;animation:bob 2.4s ease-in-out infinite}
+@keyframes bob{50%{transform:translateY(5px)}}
+
+/* ---------- postcard ---------- */
+.write{padding:56px max(18px,env(safe-area-inset-left)) 40px;display:flex;flex-direction:column;align-items:center}
+.write h2{font-weight:400;font-size:clamp(30px,7vw,40px);line-height:1.1;text-align:center;transform:rotate(-2deg)}
+.write .sub{font-size:19px;color:var(--soft);text-align:center;margin-top:8px;max-width:30ch}
+.card{position:relative;width:100%;max-width:820px;margin-top:28px;background:var(--card);border-radius:6px;
+box-shadow:0 1px 0 rgba(87,7,36,.08),0 18px 40px -24px rgba(87,7,36,.45),0 3px 10px -6px rgba(87,7,36,.25);
+display:grid;grid-template-columns:1fr;transform:rotate(-.6deg);transition:transform .6s cubic-bezier(.3,1.4,.5,1)}
+.card::before{content:"";position:absolute;inset:8px;border:1px solid var(--line);border-radius:3px;pointer-events:none}
+.canvas-zone{position:relative;aspect-ratio:4/3;margin:16px 16px 0;border-bottom:1.5px dashed var(--line);touch-action:none;cursor:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='28' height='28'%3E%3Cpath d='M3 25l2-7L19 4l5 5-14 14z' fill='%23fbf8f2' stroke='%23570724' stroke-width='1.8' stroke-linejoin='round'/%3E%3Cpath d='M3 25l2-7 5 5z' fill='%23570724'/%3E%3C/svg%3E") 3 25,crosshair}
+.canvas-zone canvas{position:absolute;inset:0;width:100%;height:100%}
+.canvas-hint{position:absolute;inset:0;display:grid;place-items:center;text-align:center;font-size:22px;color:var(--soft);pointer-events:none;transition:opacity .3s;padding:20px}
+.canvas-hint span{display:block;font-size:16px;margin-top:4px}
+.zone-tools{position:absolute;right:4px;bottom:6px;display:flex;gap:2px;z-index:2}
+.zone-tools button{font-size:16px;color:var(--soft);padding:8px 10px;min-height:40px;border-radius:8px}
+.zone-tools button:hover:not(:disabled){color:var(--ink);background:rgba(87,7,36,.06)}
+.zone-tools button:disabled{opacity:0;pointer-events:none}
+
+.addr{position:relative;padding:18px 26px 22px;display:flex;flex-direction:column;gap:14px}
+.stamp{position:absolute;top:-6px;right:22px;width:74px;height:88px;padding:5px;transform:rotate(4deg);background:var(--card);border:2px dotted rgba(87,7,36,.35);box-shadow:0 2px 6px -2px rgba(87,7,36,.25)}
+.stamp div{width:100%;height:100%;border:1px solid var(--line);display:grid;place-items:center;background:var(--paper)}
+.stamp img{width:62%;height:auto;transform:rotate(-8deg)}
+.row{display:flex;align-items:baseline;gap:10px;border-bottom:1.5px solid var(--line);padding-bottom:4px;min-height:44px}
+.row label,.row .k{flex:none;font-size:19px;color:var(--soft);width:30px}
+.row .v{font-size:21px}
+.row input{flex:1;min-width:0;border:0;outline:0;background:transparent;font:inherit;font-size:22px;color:var(--ink);padding:6px 0}
+.row input::placeholder{color:var(--soft);opacity:.55}
+.to{padding-right:96px}
+.send{display:flex;align-items:center;justify-content:space-between;gap:12px;margin-top:4px;flex-wrap:wrap}
+.legal-note{font-size:14.5px;line-height:1.35;color:var(--soft);flex:1;min-width:180px}
+.btn{font-size:19px;line-height:1;padding:13px 26px;min-height:48px;border-radius:999px;background:var(--ink);color:var(--card);transition:transform .2s,opacity .2s;white-space:nowrap}
+.btn:hover{transform:rotate(-2deg) scale(1.03)}
+.btn:disabled{opacity:.5;transform:none;cursor:default}
+.status{min-height:22px;font-size:17px;text-align:center;margin-top:14px}
 .status.err{color:#a01c1c}
-.legal-link{font-size:14px;color:var(--ink-soft);margin-top:6px;text-decoration:underline;text-underline-offset:3px}
+.hp{position:absolute;left:-9999px;width:1px;height:1px;opacity:0}
 
-/* drawing layer */
-#pad{position:absolute;left:0;top:0;width:100%;z-index:7;pointer-events:none;touch-action:pan-y}
-body.drawing #pad{pointer-events:auto;touch-action:none;cursor:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='28' height='28'%3E%3Cpath d='M3 25l2-7L19 4l5 5-14 14z' fill='%23f4efe5' stroke='%23570724' stroke-width='1.8' stroke-linejoin='round'/%3E%3Cpath d='M3 25l2-7 5 5z' fill='%23570724'/%3E%3C/svg%3E") 3 25,crosshair}
+/* sent */
+.postmark{position:absolute;left:50%;top:44%;width:210px;height:210px;margin:-105px 0 0 -105px;pointer-events:none;opacity:0;transform:rotate(-14deg) scale(1.6);z-index:3}
+.postmark svg{width:100%;height:100%;overflow:visible}
+.card.sent .postmark{animation:thump .45s cubic-bezier(.2,1.6,.4,1) forwards}
+.card.sent{transform:rotate(1.2deg)}
+.card.sent .canvas-zone{pointer-events:none}
+.card.sent .row input{pointer-events:none}
+.card.sent .zone-tools{display:none}
+@keyframes thump{to{opacity:.88;transform:rotate(-14deg) scale(1)}}
 
-/* legal dialog */
-dialog{margin:auto;max-width:min(520px,calc(100% - 32px));max-height:85svh;border:1.5px solid var(--ink);border-radius:18px;background:var(--paper);color:var(--ink);padding:26px 24px 22px;font-size:17px;line-height:1.45}
+footer{text-align:center;padding:8px 20px max(26px,env(safe-area-inset-bottom));font-size:15px;color:var(--soft)}
+footer button{font-size:15px;color:var(--soft);text-decoration:underline;text-underline-offset:3px;padding:6px}
+
+dialog{margin:auto;max-width:min(520px,calc(100% - 32px));max-height:85svh;border:1.5px solid var(--ink);border-radius:18px;background:var(--paper);color:var(--ink);padding:26px 24px 22px;line-height:1.45}
 dialog::backdrop{background:rgba(87,7,36,.35);backdrop-filter:blur(3px)}
-dialog h2{font-weight:400;font-size:28px;margin-bottom:12px}
+dialog h2{font-weight:400;font-size:28px;margin-bottom:10px}
 dialog h3{font-weight:400;font-size:20px;margin:14px 0 2px;text-decoration:underline;text-underline-offset:4px}
 dialog p{font-size:16px}
 dialog .close{position:absolute;top:12px;right:16px;font-size:26px;line-height:1;padding:6px}
 
 @keyframes up{from{opacity:0;translate:0 12px}to{opacity:1;translate:0 0}}
 @keyframes stroke{to{stroke-dashoffset:0}}
-@keyframes pop{to{opacity:1}}
 
 @media (min-width:760px){
-  .sheet{padding:30px 48px 22px}
+  .hero{padding:30px 48px 22px}
   header{font-size:23px}.brand{width:78px}
-  .seal{width:178px}.tag{font-size:27px}.tease{font-size:23px}
-  .insta{font-size:23px}
-  .address{font-size:22px}
+  .seal{width:180px}.tag{font-size:27px}.insta{font-size:23px}.address{font-size:22px}
+  .card{grid-template-columns:1.15fr 1fr}
+  .canvas-zone{margin:18px 0 18px 18px;border-bottom:0;border-right:1.5px dashed var(--line);aspect-ratio:auto;min-height:380px}
+  .addr{padding:30px 28px 24px;justify-content:flex-end}
+  .stamp{top:24px;right:26px}
+  .to{padding-right:0}
+  .addr .rows{margin-top:auto}
 }
-@media (max-height:740px){
-  main{padding:14px 0}.seal{width:116px}.tag{font-size:21px;margin-top:12px}
-  .coming{margin-top:12px}.tease{margin-top:14px}.insta{margin-top:10px}
-  footer{margin-top:10px}.address{font-size:18px}.hint{font-size:14px}
-}
-@media (max-height:620px){.seal{width:88px}.coming{font-size:32px}.tease{display:none}}
+@media (max-height:640px){.seal{width:100px}.center{padding:10px 0}.insta{margin-top:18px}}
 @media (prefers-reduced-motion:reduce){
   *,*::before,*::after{animation-duration:.01s!important;animation-delay:0s!important;animation-iteration-count:1!important;transition:none!important}
-  .seal img{-webkit-mask:none;mask:none}.grain{animation:none}
+  .seal img{-webkit-mask:none;mask:none}html{scroll-behavior:auto}
 }
 </style>
 </head>
 <body>
 <div class="grain" aria-hidden="true"></div>
-<div class="vignette" aria-hidden="true"></div>
 
-<div class="sheet">
-  <canvas id="pad" aria-hidden="true"></canvas>
+<section class="hero">
   <header>
     <h1 class="brand"><img src="word.png" alt="Olì" width="560" height="380"></h1>
-    <span class="where"><b>paris, 9e</b></span>
+    <span class="where">paris, 9e</span>
   </header>
-
-  <main>
-    <button class="seal" id="seal" type="button" aria-label="Rejouer l’animation">
-      <img src="round.png" alt="" width="360" height="428">
-    </button>
+  <div class="center">
+    <button class="seal" id="seal" type="button" aria-label="Rejouer l’animation"><img src="round.png" alt="" width="360" height="428"></button>
     <p class="tag">cave à manger</p>
     <p class="coming">bientôt à table.<svg viewBox="0 0 150 10" aria-hidden="true" preserveAspectRatio="none"><path d="M3 6 Q40 9 77 5 T147 4"/></svg></p>
-    <p class="tease" aria-live="off">
-      <span class="on">les verres sont au frais.</span>
-      <span>on débouche bientôt.</span>
-      <span>patience, ça décante.</span>
-      <span>on dresse la table.</span>
-      <span>les bons vivants d’abord.</span>
-    </p>
     <a class="insta" href="https://www.instagram.com/olicaveamanger.paris/" target="_blank" rel="noopener">
       <svg viewBox="0 0 32 32" fill="none" stroke="currentColor" stroke-width="2.1" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M10 3.7 C5 3.3 3.5 5.6 3.8 11 L3.2 22 C3.1 27.2 5.6 28.5 10.8 28.2 L22.2 28.6 C27.2 28.8 29 26 28.6 21.2 L28.9 10 C29 5 26.7 3.5 21.6 3.8 Z"/><path d="M22.1 15.4 C22.8 23.3 11.3 24.5 10.1 17.1 C8.9 9.3 21.3 8.2 22.1 15.4 Z"/><path d="M23.5 8.1 L23.8 8.4" stroke-width="3.2"/></svg>
       <span>suivez l’ouverture sur Insta</span>
     </a>
-  </main>
-
-  <footer>
+  </div>
+  <div class="foot">
     <a class="address" href="https://www.google.com/maps/search/?api=1&query=22%20rue%20Moncey%2075009%20Paris" target="_blank" rel="noopener">22 rue Moncey<small>75009 Paris</small></a>
-    <div class="actions">
-      <button class="btn btn-main" id="drawBtn" type="button" aria-pressed="false">dessiner sur la page</button>
-      <button class="btn btn-ghost" id="eraseBtn" type="button" disabled>effacer</button>
-    </div>
-    <p class="hint" id="hint" aria-live="polite">laissez-nous un petit mot, on le garde.</p>
-    <button class="mail-link" id="mailLink" type="button" aria-expanded="false" aria-controls="signup">ou juste votre mail, pour l’ouverture →</button>
-    <form class="signup" id="signup" novalidate hidden>
-      <p class="signup-title" id="signupTitle">on vous prévient de l’ouverture.</p>
-      <p class="signup-joined" id="joined" hidden><span>✓</span> votre dessin sera joint · <button type="button" id="dropDrawing">sans le dessin</button></p>
-      <div class="field">
-        <label class="sr" for="email">votre adresse mail</label>
-        <input id="email" name="email" type="email" inputmode="email" autocomplete="email" placeholder="votre@mail.fr" required>
-        <button class="btn btn-main" id="sendBtn" type="submit">envoyer</button>
+    <a class="down" href="#ecrire">écrivez-nous<svg viewBox="0 0 18 22" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M9 2 C8.6 8 9.4 13 9 19 M3 13 C5 15 7 17 9 19.5 C11 17 13 15 15 13"/></svg></a>
+  </div>
+</section>
+
+<section class="write" id="ecrire">
+  <h2>envoyez-nous une carte.</h2>
+  <p class="sub">un dessin, un mot, ou juste votre mail : on vous écrit pour l’ouverture.</p>
+
+  <form class="card" id="card" novalidate>
+    <div class="canvas-zone" id="zone">
+      <canvas id="pad" aria-label="zone de dessin"></canvas>
+      <p class="canvas-hint" id="canvasHint">dessinez ici<span>avec le doigt ou la souris</span></p>
+      <div class="zone-tools">
+        <button type="button" id="undoBtn" disabled>annuler</button>
+        <button type="button" id="clearBtn" disabled>effacer</button>
       </div>
-      <label class="consent"><input type="checkbox" id="consent" required> <span>ok pour recevoir les nouvelles d’Olì (ouverture, soirées). désinscription en un clic.</span></label>
+    </div>
+    <div class="addr">
+      <div class="stamp" aria-hidden="true"><div><img src="round.png" alt=""></div></div>
+      <div class="rows">
+        <div class="row to"><span class="k">à :</span><span class="v">Olì, 22 rue Moncey</span></div>
+        <div class="row" style="margin-top:14px"><label for="email">de :</label><input id="email" name="email" type="email" inputmode="email" autocomplete="email" placeholder="votre@mail.fr" required></div>
+      </div>
+      <div class="send">
+        <p class="legal-note">en postant, vous recevrez nos nouvelles (ouverture, soirées). désinscription en un clic.</p>
+        <button class="btn" id="sendBtn" type="submit">poster</button>
+      </div>
       <input class="hp" type="text" name="website" id="website" tabindex="-1" autocomplete="off" aria-hidden="true">
-      <p class="status" id="status" role="status" aria-live="polite"></p>
-    </form>
-    <button class="legal-link" id="legalBtn" type="button">mentions légales</button>
-  </footer>
-</div>
+    </div>
+    <div class="postmark" aria-hidden="true">
+      <svg viewBox="0 0 210 210" fill="none" stroke="#570724" stroke-width="2.4">
+        <circle cx="105" cy="105" r="84"/><circle cx="105" cy="105" r="68" stroke-width="1.4"/>
+        <path d="M14 92 C60 88 150 88 196 92 M14 118 C60 122 150 122 196 118" stroke-width="1.6"/>
+        <text x="105" y="111" text-anchor="middle" font-family="OliHand,cursive" font-size="25" fill="#570724" stroke="none">bien reçu</text>
+        <text x="105" y="66" text-anchor="middle" font-family="OliHand,cursive" font-size="15" fill="#570724" stroke="none">paris 9e</text>
+        <text x="105" y="153" text-anchor="middle" font-family="OliHand,cursive" font-size="15" fill="#570724" stroke="none">olì</text>
+      </svg>
+    </div>
+  </form>
+  <p class="status" id="status" role="status" aria-live="polite"></p>
+</section>
+
+<footer>OLI SAS · <button id="legalBtn" type="button">mentions légales</button></footer>
 
 <dialog id="legal" aria-labelledby="legal-title">
   <button class="close" type="button" aria-label="Fermer" onclick="this.closest('dialog').close()">×</button>
@@ -209,150 +219,107 @@ dialog .close{position:absolute;top:12px;right:16px;font-size:26px;line-height:1
   <h3>directeur de la publication</h3>
   <p>Romain Poggioli, président</p>
   <h3>hébergement</h3>
-  <p id="host">GitHub, Inc. — 88 Colin P. Kelly Jr. Street, San Francisco, CA 94107, États-Unis</p>
+  <p>GitHub, Inc. — 88 Colin P. Kelly Jr. Street, San Francisco, CA 94107, États-Unis</p>
   <h3>conception</h3>
   <p>Bureau Trévise — Paris</p>
   <h3>données personnelles</h3>
-  <p>Ce site ne dépose aucun cookie. Si vous laissez votre adresse mail (et éventuellement votre dessin), OLI SAS l’utilise uniquement pour vous envoyer des nouvelles d’Olì (ouverture, événements). Elle n’est ni vendue ni cédée, et conservée jusqu’à votre désinscription. Vous pouvez y accéder, la corriger ou la supprimer à tout moment en écrivant à <a href="mailto:contact@oli-cave.fr">contact@oli-cave.fr</a>, et saisir la CNIL si besoin.</p>
+  <p>Ce site ne dépose aucun cookie. Si vous postez une carte, OLI SAS reçoit votre adresse mail (et votre dessin) et l’utilise uniquement pour vous envoyer des nouvelles d’Olì (ouverture, événements). Elle n’est ni vendue ni cédée, et conservée jusqu’à votre désinscription. Vous pouvez y accéder, la corriger ou la supprimer à tout moment en écrivant à <a href="mailto:contact@oli-cave.fr">contact@oli-cave.fr</a>, et saisir la CNIL si besoin.</p>
   <h3>abus d’alcool</h3>
   <p>L’abus d’alcool est dangereux pour la santé, à consommer avec modération.</p>
 </dialog>
 
 <script>
-(() => {
-  const root = document.documentElement;
-  const setVh = () => root.style.setProperty('--vh', (window.visualViewport?.height || innerHeight) + 'px');
-  setVh(); addEventListener('resize', setVh); window.visualViewport?.addEventListener('resize', setVh);
-
-  /* rotating tease */
-  const lines = [...document.querySelectorAll('.tease span')];
-  let li = 0;
+{
   const reduce = matchMedia('(prefers-reduced-motion: reduce)').matches;
-  if (!reduce) setInterval(() => { lines[li].classList.remove('on'); li = (li + 1) % lines.length; lines[li].classList.add('on'); }, 3200);
+  const INK = '#570724', CARD = '#fbf8f2';
 
-  /* replay */
-  const seal = document.getElementById('seal');
-  seal.addEventListener('click', () => {
-    const els = document.querySelectorAll('.seal img,.tag,.coming,.coming path');
-    els.forEach(el => { el.style.animation = 'none'; void el.offsetWidth; el.style.animation = ''; });
+  /* replay seal */
+  document.getElementById('seal').addEventListener('click', () => {
+    document.querySelectorAll('.seal img,.tag,.coming,.coming path').forEach(el => { el.style.animation = 'none'; void el.offsetWidth; el.style.animation = ''; });
   });
 
-  /* drawing */
-  const pad = document.getElementById('pad'), ctx = pad.getContext('2d');
-  const drawBtn = document.getElementById('drawBtn'), eraseBtn = document.getElementById('eraseBtn'), hint = document.getElementById('hint');
-  const INK = '#570724';
-  let strokes = [], cur = null, drawing = false, dpr = 1;
-  const sheet = document.querySelector('.sheet');
-  let cw = 1, ch = 1;
-  const resize = () => {
-    dpr = Math.min(devicePixelRatio || 1, 2.5);
-    cw = sheet.clientWidth; ch = sheet.scrollHeight;
-    pad.style.height = ch + 'px';
-    pad.width = cw * dpr; pad.height = ch * dpr;
-    redraw();
-  };
-  const seg = (s) => {
-    const p = s.pts; if (!p.length) return;
-    const K = pad.width; ctx.beginPath(); ctx.moveTo(p[0][0] * K, p[0][1] * K);
-    if (p.length === 1) ctx.lineTo(p[0][0] * K + .1, p[0][1] * K);
-    for (let i = 1; i < p.length - 1; i++) {
-      const mx = (p[i][0] + p[i + 1][0]) / 2 * K, my = (p[i][1] + p[i + 1][1]) / 2 * K;
-      ctx.quadraticCurveTo(p[i][0] * K, p[i][1] * K, mx, my);
-    }
-    if (p.length > 1) { const l = p[p.length - 1]; ctx.lineTo(l[0] * K, l[1] * K); }
-    ctx.stroke();
-  };
+  /* drawing zone */
+  const zone = document.getElementById('zone'), pad = document.getElementById('pad'), ctx = pad.getContext('2d');
+  const hintEl = document.getElementById('canvasHint'), undoBtn = document.getElementById('undoBtn'), clearBtn = document.getElementById('clearBtn');
+  let strokes = [], cur = null, W = 1, H = 1, dpr = 1;
   const redraw = () => {
-    ctx.clearRect(0, 0, pad.width, pad.height);
-    ctx.lineCap = 'round'; ctx.lineJoin = 'round'; ctx.strokeStyle = INK; ctx.lineWidth = 4.2 * dpr;
-    strokes.forEach(seg);
+    ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+    ctx.clearRect(0, 0, W, H);
+    ctx.lineCap = 'round'; ctx.lineJoin = 'round'; ctx.strokeStyle = INK; ctx.lineWidth = 3.6;
+    for (const s of strokes) {
+      const p = s.map(q => [q[0] * W, q[1] * H]);
+      ctx.beginPath(); ctx.moveTo(p[0][0], p[0][1]);
+      if (p.length === 1) ctx.lineTo(p[0][0] + .1, p[0][1]);
+      for (let i = 1; i < p.length - 1; i++) ctx.quadraticCurveTo(p[i][0], p[i][1], (p[i][0] + p[i + 1][0]) / 2, (p[i][1] + p[i + 1][1]) / 2);
+      if (p.length > 1) ctx.lineTo(p[p.length - 1][0], p[p.length - 1][1]);
+      ctx.stroke();
+    }
   };
-  const sync = () => { eraseBtn.disabled = strokes.length === 0; };
-  new ResizeObserver(resize).observe(sheet); resize();
-
-  const pt = e => { const r = pad.getBoundingClientRect(); return [(e.clientX - r.left) / r.width, (e.clientY - r.top) / r.width]; };
+  const resize = () => {
+    const r = zone.getBoundingClientRect(); W = r.width; H = r.height; dpr = Math.min(devicePixelRatio || 1, 2.5);
+    pad.width = Math.round(W * dpr); pad.height = Math.round(H * dpr); redraw();
+  };
+  new ResizeObserver(resize).observe(zone);
+  const sync = () => { const has = strokes.length > 0; undoBtn.disabled = clearBtn.disabled = !has; hintEl.style.opacity = has ? 0 : 1; };
+  const pt = e => { const r = zone.getBoundingClientRect(); return [Math.min(1, Math.max(0, (e.clientX - r.left) / r.width)), Math.min(1, Math.max(0, (e.clientY - r.top) / r.height))]; };
   pad.addEventListener('pointerdown', e => {
-    if (!drawing) return;
+    if (card.classList.contains('sent')) return;
     pad.setPointerCapture(e.pointerId);
-    cur = { id: e.pointerId, pts: [pt(e)] }; strokes.push(cur);
-    if (strokes.length > 120) strokes.shift();
+    cur = { id: e.pointerId, pts: [pt(e)] }; strokes.push(cur.pts);
+    if (strokes.length > 150) strokes.shift();
     redraw(); sync();
   });
   pad.addEventListener('pointermove', e => {
     if (!cur || cur.id !== e.pointerId) return;
-    const evs = e.getCoalescedEvents ? e.getCoalescedEvents() : [e];
-    evs.forEach(ev => { if (cur.pts.length < 4000) cur.pts.push(pt(ev)); });
+    for (const ev of (e.getCoalescedEvents ? e.getCoalescedEvents() : [e])) if (cur.pts.length < 4000) cur.pts.push(pt(ev));
     redraw();
   });
   const end = e => { if (cur && cur.id === e.pointerId) cur = null; };
   pad.addEventListener('pointerup', end); pad.addEventListener('pointercancel', end);
+  undoBtn.addEventListener('click', () => { strokes.pop(); redraw(); sync(); });
+  clearBtn.addEventListener('click', () => { strokes = []; redraw(); sync(); });
 
-  drawBtn.addEventListener('click', () => {
-    drawing = !drawing; cur = null;
-    document.body.classList.toggle('drawing', drawing);
-    drawBtn.setAttribute('aria-pressed', drawing);
-    drawBtn.textContent = drawing ? 'terminer' : (strokes.length ? 'continuer le dessin' : 'dessiner sur la page');
-    hint.textContent = drawing ? 'dessinez avec le doigt ou la souris.' : (strokes.length ? 'joli. envoyez-le nous ↓' : 'laissez-nous un petit mot, on le garde.');
-    if (!drawing && strokes.length) openForm(true);
-  });
-  eraseBtn.addEventListener('click', () => { strokes = []; redraw(); sync(); withDrawing = false; joined.hidden = true; });
-
-  /* drawing as a postcard (PNG data URL) */
+  /* export drawing as PNG */
   const loadImg = src => new Promise(r => { const i = new Image(); i.onload = () => r(i); i.onerror = () => r(null); i.src = src; });
-  const postcard = async () => {
-    const W = 900, maxY = Math.max(...strokes.flatMap(s => s.pts.map(q => q[1]))), H = Math.round(W * Math.max(maxY + .08, innerHeight / cw));
-    const c = document.createElement('canvas'); c.width = W; c.height = H + 120;
+  const exportDrawing = async () => {
+    const OW = 1000, OH = Math.round(OW * H / W);
+    const c = document.createElement('canvas'); c.width = OW; c.height = OH + 90;
     const x = c.getContext('2d');
-    x.fillStyle = '#f4efe5'; x.fillRect(0, 0, c.width, c.height);
-    x.lineCap = 'round'; x.lineJoin = 'round'; x.strokeStyle = INK; x.lineWidth = 4.2 * W / cw;
-    strokes.forEach(s => { const p = s.pts; x.beginPath(); x.moveTo(p[0][0] * W, p[0][1] * W); p.forEach(q => x.lineTo(q[0] * W, q[1] * W)); if (p.length === 1) x.lineTo(p[0][0] * W + .1, p[0][1] * W); x.stroke(); });
+    x.fillStyle = CARD; x.fillRect(0, 0, c.width, c.height);
+    x.scale(OW / W, OW / W); x.drawImage(pad, 0, 0, W, H); x.setTransform(1, 0, 0, 1, 0, 0);
     const word = await loadImg('word.png');
-    if (word) { const ww = 100, wh = ww * word.height / word.width; x.drawImage(word, 40, H + 60 - wh / 2, ww, wh); }
-    x.fillStyle = INK; x.font = '32px OliHand, cursive'; x.textAlign = 'right'; x.textBaseline = 'middle';
-    x.fillText('oli-cave.fr — paris 9e', W - 40, H + 60);
+    if (word) { const ww = 80, wh = ww * word.height / word.width; x.drawImage(word, 32, OH + 45 - wh / 2, ww, wh); }
+    x.fillStyle = INK; x.font = '28px OliHand, cursive'; x.textAlign = 'right'; x.textBaseline = 'middle';
+    x.fillText('oli-cave.fr — paris 9e', OW - 32, OH + 45);
     return c.toDataURL('image/png');
   };
 
-  /* sign-up */
+  /* send */
   const ENDPOINT = 'https://script.google.com/macros/s/AKfycbxdZFWSQwrOHd-25APVpEWpGsNBG1CIxrC6IL9eWvUimcmkfx10doCTpmEU27xuq726/exec';
-  const form = document.getElementById('signup'), mailLink = document.getElementById('mailLink'), joined = document.getElementById('joined');
-  const email = document.getElementById('email'), consent = document.getElementById('consent'), status = document.getElementById('status'), sendBtn = document.getElementById('sendBtn');
-  const title = document.getElementById('signupTitle');
-  let withDrawing = false;
-  function openForm(drawingAttached) {
-    withDrawing = !!drawingAttached && strokes.length > 0;
-    joined.hidden = !withDrawing;
-    title.textContent = withDrawing ? 'envoyez-nous votre mot.' : 'on vous prévient de l’ouverture.';
-    form.hidden = false; mailLink.setAttribute('aria-expanded', 'true');
-    form.scrollIntoView({ behavior: reduce ? 'auto' : 'smooth', block: 'end' });
-    setTimeout(() => email.focus({ preventScroll: true }), 350);
-  }
-  mailLink.addEventListener('click', () => openForm(strokes.length > 0));
-  document.getElementById('dropDrawing').addEventListener('click', () => { withDrawing = false; joined.hidden = true; title.textContent = 'on vous prévient de l’ouverture.'; });
-  form.addEventListener('submit', async e => {
+  const card = document.getElementById('card'), email = document.getElementById('email'), sendBtn = document.getElementById('sendBtn'), status = document.getElementById('status');
+  card.addEventListener('submit', async e => {
     e.preventDefault();
-    status.className = 'status';
+    status.className = 'status'; status.textContent = '';
     const v = email.value.trim();
-    if (!/^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/.test(v)) { status.textContent = 'hmm, ce mail a l’air bancal.'; status.classList.add('err'); email.focus(); return; }
-    if (!consent.checked) { status.textContent = 'cochez la case, sinon on ne pourra pas vous écrire.'; status.classList.add('err'); return; }
-    sendBtn.disabled = true; status.textContent = 'on note…';
+    if (!/^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/.test(v)) { status.textContent = 'il manque votre mail (ligne « de : »).'; status.classList.add('err'); email.focus(); return; }
+    sendBtn.disabled = true; sendBtn.textContent = 'on poste…';
     try {
-      const payload = { email: v, consent: true, website: document.getElementById('website').value, drawing: withDrawing ? await postcard() : '' };
-      await fetch(ENDPOINT, { method: 'POST', mode: 'no-cors', headers: { 'Content-Type': 'text/plain;charset=utf-8' }, body: JSON.stringify(payload) });
-      form.querySelector('.field').hidden = true; form.querySelector('.consent').hidden = true; joined.hidden = true;
-      title.textContent = withDrawing ? 'bien reçu, il est encadré.' : 'c’est noté.';
-      status.textContent = 'on vous écrit dès qu’on ouvre. à très vite à table.';
-      hint.textContent = 'merci !';
+      const drawing = strokes.length ? await exportDrawing() : '';
+      await fetch(ENDPOINT, { method: 'POST', mode: 'no-cors', headers: { 'Content-Type': 'text/plain;charset=utf-8' }, body: JSON.stringify({ email: v, consent: true, website: document.getElementById('website').value, drawing }) });
+      card.classList.add('sent');
+      sendBtn.textContent = 'postée';
+      status.textContent = strokes.length ? 'merci pour le mot. on vous écrit pour l’ouverture.' : 'c’est noté. on vous écrit pour l’ouverture.';
     } catch (err) {
-      status.textContent = 'oups, ça n’est pas parti. réessayez ?'; status.classList.add('err');
-    } finally { sendBtn.disabled = false; }
+      sendBtn.disabled = false; sendBtn.textContent = 'poster';
+      status.textContent = 'oups, la carte n’est pas partie. réessayez ?'; status.classList.add('err');
+    }
   });
 
   /* legal */
   const legal = document.getElementById('legal');
   document.getElementById('legalBtn').addEventListener('click', () => legal.showModal());
   legal.addEventListener('click', e => { if (e.target === legal) legal.close(); });
-})();
+}
 </script>
 </body>
 </html>
